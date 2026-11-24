@@ -1,0 +1,285 @@
+{
+  "name": "PRTF Severity Score",
+  "short_name": "PRTF-S",
+  "formerly": "PS-CVSS",
+  "version": "2.0",
+  "url": "https://redteam.vip/prtf-s/",
+  "license": "CC-BY-4.0",
+  "formula": {
+    "exploitability": "E = (AV + AC + DL + SE) / 4",
+    "impact": "I = (2 * max(SC, CI) + min(SC, CI)) / 3",
+    "score": "Score = 1 + (I - 1) * (E + 2) / 6, rounded to one decimal",
+    "floor": "If CI is X, the score is at least 2.5"
+  },
+  "severity_bands": [
+    {
+      "severity": "LOW",
+      "min": 1,
+      "max": 1.6
+    },
+    {
+      "severity": "MEDIUM",
+      "min": 1.7,
+      "max": 2.4
+    },
+    {
+      "severity": "HIGH",
+      "min": 2.5,
+      "max": 3.2
+    },
+    {
+      "severity": "CRITICAL",
+      "min": 3.3,
+      "max": 4
+    }
+  ],
+  "vector_format": "PRTF-S:2.0/AV:_/AC:_/DL:_/SC:_/CI:_/SE:_",
+  "metrics": [
+    {
+      "id": "AV",
+      "name": "Access Vector",
+      "question": "Where does the attacker start?",
+      "group": "exploitability",
+      "values": [
+        {
+          "code": "P",
+          "points": 1,
+          "name": "Perimeter",
+          "description": "Must breach fencing, gates, or outer barriers before reaching the building."
+        },
+        {
+          "code": "E",
+          "points": 2,
+          "name": "Exterior",
+          "description": "Attack possible from the building exterior or publicly accessible grounds."
+        },
+        {
+          "code": "I",
+          "points": 3,
+          "name": "Interior",
+          "description": "Attacker is already inside the facility. No perimeter or exterior breach needed."
+        },
+        {
+          "code": "U",
+          "points": 4,
+          "name": "Unrestricted",
+          "description": "No barrier exists. The target is openly reachable by anyone."
+        }
+      ]
+    },
+    {
+      "id": "AC",
+      "name": "Access Complexity",
+      "question": "How much effort does exploitation take?",
+      "group": "exploitability",
+      "values": [
+        {
+          "code": "H",
+          "points": 1,
+          "name": "High",
+          "description": "Specialized tools or advanced skill required. Not an opportunistic attack."
+        },
+        {
+          "code": "M",
+          "points": 2,
+          "name": "Medium",
+          "description": "Basic preparation or common tools needed. Achievable with modest effort."
+        },
+        {
+          "code": "L",
+          "points": 3,
+          "name": "Low",
+          "description": "Minimal skill, no special tools. Most attackers can do this reliably."
+        },
+        {
+          "code": "N",
+          "points": 4,
+          "name": "None",
+          "description": "Zero effort. Anyone can exploit this with no preparation or tools."
+        }
+      ]
+    },
+    {
+      "id": "DL",
+      "name": "Detection Likelihood",
+      "question": "How likely is the attacker to be detected?",
+      "group": "exploitability",
+      "values": [
+        {
+          "code": "H",
+          "points": 1,
+          "name": "High",
+          "description": "Active monitoring. Cameras, guards, or staff would likely detect and respond."
+        },
+        {
+          "code": "M",
+          "points": 2,
+          "name": "Medium",
+          "description": "Some monitoring exists, but gaps allow execution without guaranteed detection."
+        },
+        {
+          "code": "L",
+          "points": 3,
+          "name": "Low",
+          "description": "Monitoring is sparse or inactive. Low risk of being seen."
+        },
+        {
+          "code": "N",
+          "points": 4,
+          "name": "None",
+          "description": "No effective detection. The attacker can operate freely."
+        }
+      ]
+    },
+    {
+      "id": "SC",
+      "name": "Scope of Compromise",
+      "question": "What access is gained?",
+      "group": "impact",
+      "values": [
+        {
+          "code": "L",
+          "points": 1,
+          "name": "Limited",
+          "description": "One room or small contained area. Impact is local and isolated."
+        },
+        {
+          "code": "Z",
+          "points": 2,
+          "name": "Zone",
+          "description": "Extends to a floor, wing, or defined security zone within the facility."
+        },
+        {
+          "code": "F",
+          "points": 3,
+          "name": "Facility",
+          "description": "Full facility access achievable. All areas reachable from this entry point."
+        },
+        {
+          "code": "M",
+          "points": 4,
+          "name": "Multi-site",
+          "description": "Access across multiple sites or systemic shared infrastructure."
+        }
+      ]
+    },
+    {
+      "id": "CI",
+      "name": "Consequence Impact",
+      "question": "What is the worst realistic outcome?",
+      "group": "impact",
+      "values": [
+        {
+          "code": "I",
+          "points": 1,
+          "name": "Info",
+          "description": "Low-sensitivity information or a non-critical area. Easily contained."
+        },
+        {
+          "code": "D",
+          "points": 2,
+          "name": "Disruption",
+          "description": "Operations disrupted, equipment tampered with, or staff safety put at risk."
+        },
+        {
+          "code": "C",
+          "points": 3,
+          "name": "Compromise",
+          "description": "Sensitive data, credentials, or critical IT systems accessed or taken."
+        },
+        {
+          "code": "X",
+          "points": 4,
+          "name": "Catastrophic",
+          "description": "Physical harm to people or irreversible facility damage is possible."
+        }
+      ]
+    },
+    {
+      "id": "SE",
+      "name": "Social Engineering Required",
+      "question": "Was social engineering needed?",
+      "group": "exploitability",
+      "values": [
+        {
+          "code": "C",
+          "points": 1,
+          "name": "Complex",
+          "description": "Elaborate pretext, props, or a multi-step deception campaign required."
+        },
+        {
+          "code": "A",
+          "points": 2,
+          "name": "Active",
+          "description": "Must engage, build rapport, and actively deceive one or more employees."
+        },
+        {
+          "code": "P",
+          "points": 3,
+          "name": "Passive",
+          "description": "Attacker only needs to blend in. No conversation or active deception."
+        },
+        {
+          "code": "N",
+          "points": 4,
+          "name": "None",
+          "description": "No social engineering required. Purely physical or technical weakness."
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "Server room unsecured during after-hours access window",
+      "description": "Server room door propped open and unattended during a scheduled after-hours maintenance window. No access log, no camera inside.",
+      "vector": "PRTF-S:2.0/AV:I/AC:N/DL:N/SC:M/CI:X/SE:N",
+      "score": 3.9,
+      "severity": "CRITICAL",
+      "rationale": "Every metric is at or near its maximum. SC:M because the server room serves systems across the whole organization."
+    },
+    {
+      "title": "Fire exit door propped open, no alarm triggered",
+      "description": "East side fire exit propped with a door wedge. Door position sensor not working. No alarm, no staff response observed.",
+      "vector": "PRTF-S:2.0/AV:E/AC:N/DL:L/SC:F/CI:C/SE:N",
+      "score": 2.8,
+      "severity": "HIGH",
+      "rationale": "Zero effort and no human barrier, but facility-level access to sensitive areas keeps it HIGH rather than CRITICAL."
+    },
+    {
+      "title": "Wiegand readers send credentials in cleartext",
+      "description": "HID proximity readers on all exterior doors use the Wiegand protocol. Credentials travel unencrypted and can be intercepted.",
+      "vector": "PRTF-S:2.0/AV:E/AC:M/DL:N/SC:F/CI:C/SE:N",
+      "score": 2.7,
+      "severity": "HIGH",
+      "rationale": "Systemic across every exterior door with no detection. Needs common tools, so AC:M.",
+      "prtf_technique": "PRTF-7.08"
+    },
+    {
+      "title": "IT vendor pretext, access to wiring closet",
+      "description": "Assessor posing as an IT vendor was escorted to a wiring closet. Staff did not verify identity or a work order.",
+      "vector": "PRTF-S:2.0/AV:E/AC:M/DL:M/SC:Z/CI:D/SE:A",
+      "score": 1.7,
+      "severity": "MEDIUM",
+      "rationale": "Active deception was needed (SE:A) and the outcome stayed within one zone, so it lands in MEDIUM.",
+      "prtf_technique": "PRTF-6.11"
+    },
+    {
+      "title": "Sensitive documents on unattended workstations",
+      "description": "Documents labeled Internal visible on several unattended desks. No clean desk enforcement observed.",
+      "vector": "PRTF-S:2.0/AV:I/AC:L/DL:M/SC:L/CI:I/SE:C",
+      "score": 1,
+      "severity": "LOW",
+      "rationale": "Low-sensitivity information in a small area sets a low ceiling. Easy to reach, but the outcome is minor.",
+      "prtf_technique": "PRTF-8.01"
+    },
+    {
+      "title": "Visitor log left open at unattended reception",
+      "description": "Visitor log with names, companies and host employees left open on an unattended reception desk.",
+      "vector": "PRTF-S:2.0/AV:E/AC:L/DL:H/SC:L/CI:I/SE:C",
+      "score": 1,
+      "severity": "LOW",
+      "rationale": "Useful for reconnaissance, but the direct outcome is limited information. LOW.",
+      "prtf_technique": "PRTF-8.01"
+    }
+  ]
+}

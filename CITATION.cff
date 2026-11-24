@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use PRTF-S, please cite it as below."
+title: "PRTF Severity Score (PRTF-S)"
+version: "2.0"
+date-released: 2026-11-24
+url: "https://redteam.vip/prtf-s/"
+repository-code: "https://github.com/DavidProbinsky/prtf-s"
+license: CC-BY-4.0
+type: software
+authors:
+  - name: "RedTeam.vip"
+  - family-names: "Probinsky"
+    given-names: "David"
+keywords:
+  - physical security
+  - red team
+  - penetration testing
+  - severity scoring
+  - risk rating
+  - PRTF
